@@ -1,0 +1,21 @@
+version: v1
+managed:
+  enabled: true
+  go_package_prefix:
+    default: github.com/tatsuya0429/earthly_monorepo/server/internal/gen
+plugins:
+  - name: go
+    out: ../server/internal/gen
+    strategy: all
+    opt: paths=source_relative
+    
+  - plugin: go-grpc
+    out: ../server/internal/gen
+    strategy: all
+    opt: paths=source_relative
+
+  - name: ts
+    out: ../client/gen
+    strategy: all
+    path: ../client/node_modules/ts-proto/protoc-gen-ts_proto
+  

@@ -1,0 +1,15 @@
+VERSION 0.8
+
+WORKDIR /app
+
+deps:
+  FROM go:1.20-alpine
+  COPY go.mod go.sum ./
+  RUN go mod download
+
+dev:
+  FROM +deps
+  RUN go install github.com/cosmtrek/air@latest
+  COPY ./*.go .
+  COPY ./.air.toml .
+  CMD ["air" "-c" ".air.toml"]

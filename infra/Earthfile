@@ -1,0 +1,28 @@
+VERSION 0.8
+
+prep:
+  FROM hashicorp/terraform:light
+  RUN terraform init
+
+localstack:
+  FROM +prep
+
+  WITH DOCKER --pull localstack/localstack:0.12.9
+    RUN docker run -d -p 4566:4566 -e SERVICES=s3 --name localstack --network "host" localstack/localstack:0.12.9 && \
+    terraform apply -auto-approve
+  END
+
+apply:
+  FROM +prep
+
+  RUN --push terraform apply -auto-approve
+
+  SAVE ARTIFACT terraform.tfstate AS LOCAL terraform.tfstate
+  SAVE ARTIFACT terraform.tfstate.backup AS LOCAL terraform.tfstate.backup
+
+plan:
+  FROM +prep
+
+  RUN terraform plan
+
+

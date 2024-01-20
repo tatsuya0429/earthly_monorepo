@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package app.video.v1;
+
+service VideoService {
+  rpc UploadVideo(stream UploadVideoRequest) returns (UploadVideoResponse) {}
+}
+
+message UploadVideoRequest {
+  string video_name = 1;
+  bytes video_chunk = 2;
+}
+
+message UploadVideoResponse {
+  string video_id = 1;
+}
+
