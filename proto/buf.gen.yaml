@@ -17,5 +17,5 @@ plugins:
   - name: ts
     out: ../client/gen
     strategy: all
-    path: ../client/node_modules/ts-proto/protoc-gen-ts_proto
+    plugin: buf.build/community/stephenh-ts-proto
   
